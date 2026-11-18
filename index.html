@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CSCI3160 互动复习站：Optimal BST、DFS/SCC、最短路、最大流、APSP、近似算法与全部配套习题。" />
+  <title>CSCI3160 · 互动复习站</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#view">跳到主要内容</a>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="主导航">
+      <div class="brand">
+        <div class="brand-mark">3160</div>
+        <div>
+          <div class="brand-title">互动复习站</div>
+          <div class="brand-sub">Algorithms Review</div>
+        </div>
+      </div>
+
+      <div class="sidebar-progress">
+        <div class="sp-row"><span>总进度</span><strong id="side-progress-label">0%</strong></div>
+        <div class="progress-track"><div class="progress-fill" id="side-progress-fill"></div></div>
+        <div class="sp-hint" id="side-progress-hint">从先修地图开始</div>
+      </div>
+
+      <nav class="nav" id="main-nav">
+        <div class="nav-group">
+          <div class="nav-label">开始</div>
+          <a class="nav-link" data-route="dashboard" href="#/dashboard"><span class="nav-ico">◈</span>复习总览</a>
+          <a class="nav-link" data-route="map" href="#/map"><span class="nav-ico">⌁</span>知识地图</a>
+          <a class="nav-link" data-route="textbook" href="#/textbook"><span class="nav-ico">▥</span>CLRS 精讲 <span class="nav-badge" id="nav-tb-count">20</span></a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">讲义 · 从 Optimal BST 到 k-Center</div>
+          <a class="nav-link" data-route="module/pre" href="#/module/pre"><span class="nav-num">00</span>先修底座</a>
+          <a class="nav-link" data-route="module/bst" href="#/module/bst"><span class="nav-num">01</span>Optimal BST</a>
+          <a class="nav-link" data-route="module/dfs" href="#/module/dfs"><span class="nav-num">02</span>DFS 与白路径</a>
+          <a class="nav-link" data-route="module/scc" href="#/module/scc"><span class="nav-num">03</span>强连通分量</a>
+          <a class="nav-link" data-route="module/dijkstra" href="#/module/dijkstra"><span class="nav-num">04</span>Dijkstra</a>
+          <a class="nav-link" data-route="module/bellman" href="#/module/bellman"><span class="nav-num">05</span>Bellman–Ford</a>
+          <a class="nav-link" data-route="module/maxflow" href="#/module/maxflow"><span class="nav-num">06</span>最大流</a>
+          <a class="nav-link" data-route="module/apsp" href="#/module/apsp"><span class="nav-num">07</span>APSP · Johnson</a>
+          <a class="nav-link" data-route="module/np" href="#/module/np"><span class="nav-num">08</span>NP-hard 与近似</a>
+          <a class="nav-link" data-route="module/tsp" href="#/module/tsp"><span class="nav-num">09</span>TSP</a>
+          <a class="nav-link" data-route="module/setcover" href="#/module/setcover"><span class="nav-num">10</span>Set Cover</a>
+          <a class="nav-link" data-route="module/kcenter" href="#/module/kcenter"><span class="nav-num">11</span>k-Center</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-label">训练</div>
+          <a class="nav-link" data-route="exercises" href="#/exercises"><span class="nav-ico">▤</span>习题库 <span class="nav-badge" id="nav-ex-count">76</span></a>
+          <a class="nav-link" data-route="extra" href="#/extra"><span class="nav-ico">✦</span>期中风格加练 <span class="nav-badge" id="nav-extra-count">21</span></a>
+          <a class="nav-link" data-route="formulas" href="#/formulas"><span class="nav-ico">ƒ</span>公式速查</a>
+          <a class="nav-link" data-route="exam" href="#/exam"><span class="nav-ico">◷</span>模拟考</a>
+          <a class="nav-link" data-route="wrong" href="#/wrong"><span class="nav-ico">↺</span>错题本 <span class="nav-badge coral" id="nav-wrong-count">0</span></a>
+        </div>
+      </nav>
+
+      <div class="sidebar-foot">
+        <button class="ghost-btn small" id="reset-progress" type="button">重置本地进度</button>
+        <div class="muted tiny">进度仅保存在此浏览器</div>
+      </div>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="menu-toggle" aria-label="打开导航" aria-expanded="false">☰</button>
+        <div class="crumb" id="crumb"><span>复习总览</span></div>
+        <div class="topbar-actions">
+          <button class="search-trigger" id="search-trigger" type="button">
+            <span>搜索知识点 / 习题</span><kbd>⌘ K</kbd>
+          </button>
+          <button class="icon-btn" id="theme-toggle" type="button" aria-label="切换深浅色" title="切换深浅色">◐</button>
+        </div>
+      </header>
+
+      <main id="view" class="view" tabindex="-1"></main>
+
+      <footer class="site-foot">
+        <span>CSCI3160 · 根据课程讲义、Regular 8–13、Special 8–14 + 10b 与 CLRS 中文版整理</span>
+        <span>12 个讲义模块 · CLRS 20 单元精讲 · 76 道原始题 + 3 套 21 道加练</span>
+      </footer>
+    </div>
+  </div>
+
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="modal-title">详情</h2>
+        <button class="icon-btn" id="modal-close" type="button" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <div class="search-panel" id="search-panel" hidden>
+    <div class="search-box">
+      <input id="global-search" type="search" placeholder="搜索：白路径、Johnson、set cover、SCC…" autocomplete="off" />
+      <button class="icon-btn" id="search-close" type="button" aria-label="关闭搜索">×</button>
+    </div>
+    <div id="search-results" class="search-results"></div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/flow-extra.js"></script>
+  <script src="assets/js/extra-bc.js"></script>
+  <script src="assets/js/textbook.js"></script>
+  <script src="assets/js/textbook-exercises.js"></script>
+  <script src="assets/js/solutions-detail-1.js"></script>
+  <script src="assets/js/solutions-detail-2.js"></script>
+  <script src="assets/js/solutions-detail-3.js"></script>
+  <script src="assets/js/demos.js"></script>
+  <script src="assets/js/demos-approx.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
